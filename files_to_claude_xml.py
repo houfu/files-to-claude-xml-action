@@ -19,6 +19,7 @@ def read_docx_content(file_path: Path) -> str:
     from docx import Document
     doc = Document(file_path)
     return '\n'.join([paragraph.text for paragraph in doc.paragraphs])
+
 __version__ = "2024.10.4"
 
 

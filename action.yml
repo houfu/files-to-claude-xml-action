@@ -1,0 +1,33 @@
+name: 'Files to Claude XML'
+description: 'Convert files to XML format for Claude'
+inputs:
+  files:
+    description: 'Input files to process'
+    required: true
+    type: list
+  output:
+    description: 'Output XML file path'
+    required: false
+    default: '_claude.xml'
+  verbose:
+    description: 'Enable verbose output'
+    required: false
+    default: 'false'
+  version:
+    description: 'Display the version number'
+    required: false
+    default: 'false'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        enable-cache: true
+    - name: Run uv
+      shell: bash
+      run: uv run files_to_claude_xml.py ${{ join(inputs.files, ' ') }} --output ${{ inputs.output }} ${{ inputs.verbose == 'true' && '--verbose' || '' }} ${{ inputs.version == 'true' && '--version' || '' }}
+branding:
+  icon: 'book-open'
+  color: 'blue'
